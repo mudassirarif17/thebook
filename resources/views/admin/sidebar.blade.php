@@ -19,6 +19,7 @@
                     <a href="./add_author" class="nav-item nav-link {{Request::is('add_author') ? 'active' : ''}}"><i class="fa fa-th me-2"></i>Add Author</a>
                     <a href="./all_author" class="nav-item nav-link {{Request::is('all_author') ? 'active' : ''}}"><i class="fa fa-keyboard me-2"></i>All Authors</a>
                     <a href="./all_books" class="nav-item nav-link {{Request::is('all_books') ? 'active' : ''}}"><i class="fa fa-table me-2"></i>All Books</a>
+                    <a href="./all_req" class="nav-item nav-link {{Request::is('all_req') ? 'active' : ''}}"><i class="fa fa-table me-2"></i>All Requests</a>
                 </div>
             </nav>
         </div>

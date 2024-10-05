@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\bookrequest;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
@@ -97,7 +98,24 @@ class AdminController extends Controller
         }
     }
 
-    
+    public function all_req(){
+        $all_requests = bookrequest::all();
+        return view('admin.all_req' , compact('all_requests'));
+    }
 
-    
+    public function app_req($id){
+        $all_requests = bookrequest::find($id);
+        $all_requests->status = "Approved";
+        $all_requests->save();
+        return redirect()->back();
+    }
+
+    public function cancel_req($id){
+        $all_requests = bookrequest::find($id);
+        $all_requests->status = "Canceled";
+        $all_requests->save();
+        return redirect()->back();
+    }
+
+
 }

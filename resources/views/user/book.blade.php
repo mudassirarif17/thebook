@@ -34,9 +34,35 @@
 							<a target="_blank" href="{{url('./bookfile' , $b->file)}}" class="btn btn-secondary">Read Book</a>
 							@else
 								@if(Auth::id())
-								<a target="_blank" href="{{url('./bookfile' , $b->file)}}" class="btn btn-secondary">Request Book</a>
+									@php
+										$hasApprovedRequest = false;
+										$hasPendingRequest = false;
+									@endphp
+									@foreach($bookrequest as $br)
+										@if($br->userId == Auth::id())
+										@if($br->bookId == $b->id && $br->status == "Approved")
+											@php
+												$hasApprovedRequest = true;
+											@endphp
+											@break
+										@elseif($br->bookId == $b->id && $br->status == "Pending")
+											@php
+												$hasPendingRequest = true;
+											@endphp
+											@break
+										@endif
+										@endif
+									@endforeach
+									@if($hasApprovedRequest)
+										<a target="_blank" href="{{url('./bookfile' , $b->file)}}" class="btn btn-secondary">Read Book</a>
+									@elseif($hasPendingRequest)
+									<p>Your Request is Pending</p>
+									<a href="{{url('/cancel_request' , $b->id)}}" class="btn btn-secondary">Cancel request</a>
+									@else
+									<a href="{{url('/book_request' , $b->id)}}" class="btn btn-secondary">Order Book</a>
+									@endif
 								@else
-								<a href="/login" class="btn btn-secondary">Please Authenticate</a>
+									<a href="/login" class="btn btn-secondary">Please Authenticate</a>
 								@endif
 							@endif
     					</div>

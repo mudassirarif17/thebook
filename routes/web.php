@@ -6,6 +6,8 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\Book;
+use App\Models\bookrequest;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +26,10 @@ Route::get('/edit_author/{id}' , [AdminController::class , 'edit_author']);
 Route::post('/update_author/{id}' , [AdminController::class , 'update_author']);
 Route::get('/all_author' , [AdminController::class , 'all_author']);
 Route::get('/all_books' , [AdminController::class , 'all_books']);
+Route::get('/all_req' , [AdminController::class , 'all_req']);
+Route::get('/app_req/{id}' , [AdminController::class , 'app_req']);
+Route::get('/cancel_req/{id}' , [AdminController::class , 'cancel_req']);
+
 
 
 
@@ -37,6 +43,8 @@ Route::get('/edit_author_book/{id}' , [AuthorController::class , 'edit_book']);
 
 
 Route::get('/all_user_req/{name}' , [UserController::class , 'all_user_req']);
+Route::get('/book_request/{b_id}' , [UserController::class , 'book_request']);
+Route::get('/cancel_request/{b_id}' , [UserController::class , 'cancel_request']);
 
 
 
@@ -44,7 +52,8 @@ Route::get('/all_user_req/{name}' , [UserController::class , 'all_user_req']);
 
 Route::get('/', function () {
     $book = Book::all();
-    return view('user.index' , compact('book'));
+    $bookrequest = bookrequest::all();
+    return view('user.index' , compact('book' , 'bookrequest'));
 });
 
 Route::middleware([
@@ -56,7 +65,8 @@ Route::middleware([
         if(Auth::id()){
             if(Auth::User()->usertype == '0'){
                 $book = Book::all();
-                return view('user.index' , compact('book'));
+                $bookrequest = bookrequest::all();
+                return view('user.index' , compact('book' , 'bookrequest'));
             }
             elseif(Auth::User()->usertype == '1'){
                 return view('author.index');
